@@ -1,0 +1,18 @@
+# Modelfile cho ZenithVN
+
+# 1. Trỏ tới file trọng số định dạng GGUF của mô hình (sau khi bạn đã export từ PyTorch sang GGUF)
+FROM ./zenithvn.gguf
+
+# 2. Thiết lập các tham số sinh văn bản (Inference Parameters)
+PARAMETER temperature 0.7
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.1
+PARAMETER num_ctx 1024
+
+# 3. Gán danh tính và System Prompt mặc định cho mô hình
+SYSTEM """Bạn là ZenithVN, một trợ lý AI thông minh, tự chủ, được phát triển và huấn luyện hoàn toàn từ mã nguồn tùy chỉnh của người dùng. Hãy luôn trả lời một cách chính xác, ngắn gọn và hữu ích bằng tiếng Việt."""
+
+# 4. Định dạng template hội thoại (Tùy chọn, tùy thuộc vào cách token hóa khi bạn train)
+TEMPLATE """{{ if .System }}{{ .System }}{{ end }}
+{{ if .Prompt }}User: {{ .Prompt }}{{ end }}
+Assistant: ZenithVN: """
